@@ -932,84 +932,84 @@ function logical14(x: number): Array<{ x: string }> {
  * || in an addition
  */
 function logical15a(x: number): number {
-  return 5 + (x || 7);
+  return 5 + x || 7;
 }
 
 /**
  * || in an addition
  */
 function logical15b(x: number): number {
-  return (x || 7) + 5;
+  return x || 7 + 5;
 }
 
 /**
  * && in an addition
  */
 function logical15c(x: number): number {
-  return 5 + (x && 7);
+  return 5 + x && 7;
 }
 
 /**
  * && in an addition
  */
 function logical15d(x: number): number {
-  return (x && 7) + 5;
+  return x && 7 + 5;
 }
 
 /**
  * || in a comparison
  */
 function logical16a(x: number): boolean {
-  return 5 < (x || 7);
+  return 5 < x || 7;
 }
 
 /**
  * || in a comparison
  */
 function logical16b(x: number): boolean {
-  return (x || 7) < 5;
+  return x || 7 < 5;
 }
 
 /**
  * && in a comparison
  */
 function logical16c(x: number): boolean {
-  return 5 < (x && 7);
+  return 5 < x && 7;
 }
 
 /**
  * && in a comparison
  */
 function logical16d(x: number): boolean {
-  return (x && 7) < 5;
+  return x && 7 < 5;
 }
 
 /**
  * || in an equality
  */
 function logical17a(x: number): boolean {
-  return 5 == (x || 7);
+  return 5 == x || 7;
 }
 
 /**
  * || in an equality
  */
 function logical17b(x: number): boolean {
-  return (x || 7) == 5;
+  return x || 7 == 5;
 }
 
 /**
  * && in an equality
  */
 function logical17c(x: number): boolean {
-  return 5 == (x && 7);
+  return 5 == x && 7;
 }
 
 /**
  * && in an equality
  */
 function logical17d(x: number): boolean {
-  return (x && 7) == 5;
+  return x && 7 == 5;
 }
 
 /**

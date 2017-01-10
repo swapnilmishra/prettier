@@ -236,14 +236,31 @@ function genericPrintNoParens(path, options, print) {
     );
   case "BinaryExpression":
   case "LogicalExpression":
-    return group(
-      concat([
+    const binaryExprs = []
+    let curr = n;
+    while(curr.type === "BinaryExpression") {
+      binaryExprs.push({ right: curr.right, op: curr.operator });
+      curr = curr.left;
+    }
+    binaryExprs.reverse();
+
+    if(binaryExprs.length > 0) {
+      return group(concat([
+        // TODO: create correct paths
+        print(FastPath.from(curr)),
+        indent(options.tabWidth,
+               concat(binaryExprs.map(expr => {
+                 return concat([" ", expr.op, line, print(FastPath.from(expr.right))]);
+               })))
+      ]));
+    }
+
+    return group(concat([
         path.call(print, "left"),
         " ",
         n.operator,
         indent(options.tabWidth, concat([ line, path.call(print, "right") ]))
-      ])
-    );
+    ]));
   case "AssignmentPattern":
     return concat([
       path.call(print, "left"),

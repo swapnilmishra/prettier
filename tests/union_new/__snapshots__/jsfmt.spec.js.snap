@@ -1497,7 +1497,7 @@ exports[`test test20.js 1`] = `
 
 [ \"a\", \"b\" ].reduce(
   (regex, representation, index) => {
-    return regex + (index ? \"|\" : \"\") + \"(\" + representation + \")\";
+    return regex + index ? \"|\" : \"\" + \"(\" + representation + \")\";
   },
   \"\"
 );

@@ -180,7 +180,7 @@ let tests = [
     // error
     x + {};
     // error
-    ({}) + x; // error
+    {} + x; // error
   },
   // when one side is a string or number and the other is invalid, we
   // assume you are expecting a string or number (respectively), rather than
@@ -229,7 +229,7 @@ y **= 2;
 // error
 1 + 2 ** 3 + 4;
 2 ** 2;
-(-2) ** 2;"
+-2 ** 2;"
 `;
 
 exports[`test generic.js 1`] = `
@@ -334,13 +334,13 @@ let tests = [
 \"foo\" < \"bar\";
 1 < { foo: 1 };
 // error
-({ foo: 1 }) < 1;
+{ foo: 1 } < 1;
 // error
-({ foo: 1 }) < { foo: 1 };
+{ foo: 1 } < { foo: 1 };
 // error
 \"foo\" < { foo: 1 };
 // error
-({ foo: 1 }) < \"foo\";
+{ foo: 1 } < \"foo\";
 // error
 var x = (null: ?number);
 1 < x;

@@ -91,7 +91,7 @@ let tests = [
     // error
     void 0 in {};
     // error
-    ({}) in {};
+    {} in {};
     // error
     [] in {};
     // error
