@@ -11,7 +11,7 @@ var defaults = {
   // If true, will use single instead of double quotes
   singleQuote: false,
   // Controls the printing of trailing commas wherever possible
-  trailingComma: false,
+  trailingComma: "none",
   // Controls the printing of spaces inside array and objects
   bracketSpacing: true,
   // Which parser to use. Valid options are 'flow' and 'babylon'

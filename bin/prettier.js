@@ -9,25 +9,8 @@ const minimist = require("minimist");
 const prettier = require("../index");
 
 const argv = minimist(process.argv.slice(2), {
-  boolean: [
-    "write",
-    "stdin",
-    "single-quote",
-    "trailing-comma",
-    "bracket-spacing",
-    // The supports-color package (a sub sub dependency) looks directly at
-    // `process.argv` for `--no-color` and such-like options. The reason it is
-    // listed here is to avoid "Ignored unknown option: --no-color" warnings.
-    // See https://github.com/chalk/supports-color/#info for more information.
-    "color",
-    "help",
-    "version",
-    "debug-print-doc",
-    "debug-check",
-    // Deprecated in 0.0.10
-    "flow-parser"
-  ],
-  string: ["print-width", "tab-width", "parser"],
+  boolean: true,
+  string: ["print-width", "tab-width", "parser", "trailing-comma"],
   default: { color: true, "bracket-spacing": true, parser: "babylon" },
   alias: { help: "h", version: "v" },
   unknown: param => {
@@ -118,13 +101,26 @@ function getIntOption(optionName) {
   process.exit(1);
 }
 
+function getTrailingComma() {
+  let trailingComma;
+  switch(argv["trailing-comma"]) {
+    case undefined:
+      return "none";
+    case "":
+    case "compat":
+      return "compat";
+    case "all":
+      return "all";
+  }
+}
+
 const options = {
   printWidth: getIntOption("print-width"),
   tabWidth: getIntOption("tab-width"),
   bracketSpacing: argv["bracket-spacing"],
-  parser: getParserOption(),
   singleQuote: argv["single-quote"],
-  trailingComma: argv["trailing-comma"]
+  parser: getParserOption(),
+  trailingComma: getTrailingComma()
 };
 
 function format(input) {

@@ -34,6 +34,24 @@ function maybeAddParens(path, lines) {
   return path.needsParens() ? concat(["(", lines, ")"]) : lines;
 }
 
+function shouldPrintComma(options, level) {
+  level = level || "compat";
+
+  switch(options.trailingComma) {
+    case "all":
+      if(level === "all") {
+        return true;
+      }
+    case "compat":
+      if(level === "compat") {
+        return true;
+      }
+    case "none":
+    default:
+      return false;
+  }
+}
+
 function genericPrint(path, options, printPath) {
   assert.ok(path instanceof FastPath);
 
@@ -465,7 +483,7 @@ function genericPrintNoParens(path, options, print) {
                     join(concat([",", line]), grouped)
                   ])
                 ),
-                ifBreak(options.trailingComma ? "," : ""),
+                ifBreak(shouldPrintComma(options) ? "," : ""),
                 options.bracketSpacing ? line : softline,
                 "}"
               ])
@@ -632,7 +650,7 @@ function genericPrintNoParens(path, options, print) {
                 join(concat([separator, line]), props)
               ])
             ),
-            ifBreak(canHaveTrailingComma && options.trailingComma ? "," : ""),
+            ifBreak(canHaveTrailingComma && shouldPrintComma(options) ? "," : ""),
             options.bracketSpacing ? line : softline,
             rightBrace,
             path.call(print, "typeAnnotation")
@@ -731,7 +749,7 @@ function genericPrintNoParens(path, options, print) {
               ifBreak(
                 canHaveTrailingComma &&
                   !needsForcedTrailingComma &&
-                  options.trailingComma
+                  shouldPrintComma(options)
                   ? ","
                   : ""
               ),
@@ -1798,7 +1816,7 @@ function printArgumentsList(path, options, print) {
                 options.tabWidth,
                 concat([line, join(concat([",", line]), printed)])
               ),
-              options.trailingComma ? "," : "",
+              shouldPrintComma(options, "all") ? "," : "",
               line,
               ")"
             ]),
@@ -1817,7 +1835,7 @@ function printArgumentsList(path, options, print) {
         options.tabWidth,
         concat([softline, join(concat([",", line]), printed)])
       ),
-      ifBreak(options.trailingComma ? "," : ""),
+      ifBreak(shouldPrintComma(options, "all") ? "," : ""),
       softline,
       ")"
     ]),
@@ -1863,7 +1881,7 @@ function printFunctionParams(path, print, options) {
       options.tabWidth,
       concat([softline, join(concat([",", line]), printed)])
     ),
-    ifBreak(canHaveTrailingComma && options.trailingComma ? "," : ""),
+    ifBreak(canHaveTrailingComma && shouldPrintComma(options) ? "," : ""),
     softline,
     ")"
   ]);
@@ -1974,7 +1992,7 @@ function printExportDeclaration(path, options, print) {
                   join(concat([",", line]), path.map(print, "specifiers"))
                 ])
               ),
-              ifBreak(options.trailingComma ? "," : ""),
+              ifBreak(shouldPrintComma(options) ? "," : ""),
               options.bracketSpacing ? line : softline,
               "}"
             ])
