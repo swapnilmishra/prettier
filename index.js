@@ -2,7 +2,7 @@
 
 const codeFrame = require("babel-code-frame");
 const comments = require("./src/comments");
-const version = typeof window == "undefined"
+const version = typeof window != "undefined"
   ? require("./package.json").version
   : "";
 const printAstToDoc = require("./src/printer").printAstToDoc;
